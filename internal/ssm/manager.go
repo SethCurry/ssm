@@ -22,6 +22,13 @@ type ServiceEntry struct {
 	Config          ServiceConfig
 }
 
+func NewSupervisor(logger *zap.Logger) *Supervisor {
+	return &Supervisor{
+		Services: make(map[string]*ServiceEntry),
+		Logger:   logger,
+	}
+}
+
 type Supervisor struct {
 	Services map[string]*ServiceEntry
 	Logger   *zap.Logger
@@ -31,10 +38,6 @@ func getServiceLogger(baseLogger *zap.Logger, svcName string) *zap.Logger {
 	return baseLogger.With(
 		zap.String("service", svcName),
 	)
-}
-
-func (s *Supervisor) AddService(conf ServiceConfig) error {
-	return nil
 }
 
 func (s *Supervisor) Run() error {
