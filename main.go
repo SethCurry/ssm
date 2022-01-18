@@ -22,6 +22,13 @@ func main() {
 		)
 	}
 
+	serviceConfigs, err := ssm.LoadServiceDirectory(supConfig.ServiceDirectory)
+	if err != nil {
+		logger.Fatal("failed to load service configs",
+			zap.Error(err),
+		)
+	}
+
 	sup := ssm.NewSupervisor(logger)
 
 	sup.Run()
